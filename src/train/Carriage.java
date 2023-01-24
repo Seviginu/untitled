@@ -5,8 +5,10 @@ import persons.Passanger;
 import java.util.ArrayList;
 
 public class Carriage{
-    private ArrayList<Passanger> passangers = new ArrayList<>();
-    private ArrayList<CarriageItem> items = new ArrayList<>();
+    private final ArrayList<Passanger> passangers = new ArrayList<>();
+    private final ArrayList<CarriageItem> items = new ArrayList<>();
+
+    private Train train;
     private static int countOfCarriages = 0;
     private final int id;
     public Carriage(){
@@ -23,6 +25,14 @@ public class Carriage{
         item.setCarriage(this);
         items.add(item);
         System.out.println("Предмет " + item.getName() + " теперь находится в вагоне " + this.id);
+    }
+
+    public void setTrain(Train train){
+        this.train = train;
+    }
+
+    public Train getTrain(){
+        return train;
     }
 
     @Override

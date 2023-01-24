@@ -2,17 +2,37 @@ package persons;
 
 import sounds.*;
 import train.CarriageItem;
+import train.Seat;
+
+
 import java.util.HashSet;
 
 public class Dagny extends Passanger {
     private Playable nowListening;
     private Think think;
+    private int streakWithoutSleeping;
     private final HashSet<Music> musicInMemory = new HashSet<>();
     private boolean identifyPlace = false;
     public Dagny() {
         super("Дагни Таггерт",
                 30,
-                new Apperance(HairColor.DARK, FaceMusculesState.NORMAL, FaceEmotions.SMILE));
+                new Apperance(HairColor.DARK, FaceMusculesState.NORMAL, FaceEmotions.LIPSCOMPRESSED));
+        streakWithoutSleeping = 1;
+    }
+
+    public void incrementDayStreak(){
+        System.out.println("Количество дней без сна увеличено на 1!");
+        streakWithoutSleeping++;
+    }
+
+    public int getStreakWithoutSleeping(){
+        return streakWithoutSleeping;
+    }
+
+    public void sleep(){
+        streakWithoutSleeping = 0;
+        mood = Mood.SLEEPING;
+        System.out.println(name + " уснула...");
     }
 
     public boolean isIdentifyPlace(){
@@ -32,10 +52,6 @@ public class Dagny extends Passanger {
     public void rememberMusic(Music music){
         musicInMemory.add(music);
         System.out.println("Дагни запомнила " + music.getTitle());
-    }
-
-    public Think getThink(){
-        return think;
     }
 
     public void tryToRelax() {
@@ -68,13 +84,6 @@ public class Dagny extends Passanger {
         }
         System.out.println("Дагни не смогла распознать автора");
         return null;
-    }
-
-    public boolean ratePerson(Person person){
-        Apperance personApperance = person.getApperance();
-        return personApperance.getHairColor() == HairColor.BLONDE &&
-                personApperance.getFaceEmotions() == FaceEmotions.SMILE &&
-                personApperance.getFaceMusculesState() == FaceMusculesState.TENSE;
     }
 
     public void thinkAboutListening(){
@@ -115,7 +124,6 @@ public class Dagny extends Passanger {
     }
 
     public void askQuestionAboutMusic(Conductor conductor){
-        lookAt(conductor);
         sayPhrase("Пожалуйста скажи мне, что ты насвистываешь?");
         Music music = conductor.replyMusicQuestion(this);
         listenTo(music);
@@ -125,5 +133,60 @@ public class Dagny extends Passanger {
         else {
             sayPhrase("Хорошая мелодия.");
         }
+    }
+
+    public void putHandsInPockets() throws NoClothesWithPocketsException{
+        for (Cloth cloth : clothes){
+            if (cloth instanceof Pockets){
+                System.out.println("Дагни засунула руки в карманы.");
+                ((Pockets) cloth).putHandsInPockets();
+                return;
+            }
+        }
+        throw new NoClothesWithPocketsException();
+    }
+
+    private boolean handsInPockets(){
+        for (Cloth cloth : clothes){
+            if (cloth instanceof Pockets && ((Pockets) cloth).isHandsInPockets()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String rateSelf(){
+        if (handsInPockets()){
+            return "Дагни недовольна своей позой, она считает ее неженственной.";
+        }
+        else{
+            return "Дагни довольная собой.";
+        }
+    }
+
+    public void throwHead(){
+        System.out.println("Дагни откинула голову.");
+    }
+
+    public void seat(Seat seat){
+        seat.seatDown(this);
+    }
+
+    public void tryToThinking(){
+        if(nowListening != null && nowListening instanceof Music){
+            System.out.println("Дагни не может думать из-за музыки");
+        }
+        else {
+            think = new Think("*Умные мысли*");
+        }
+    }
+
+    public void printThinks(){
+        System.out.println(think);
+    }
+
+    public void takeOffHat(Hat hat){
+        System.out.println("Дагни взяла сигарету и гневно качнула головой");
+        takeOff(hat);
     }
 }

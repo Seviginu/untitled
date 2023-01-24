@@ -4,6 +4,11 @@ public class Think {
     private final String content;
     private final Object subject;
 
+    public Think(String content){
+        this.content = content;
+        this.subject = null;
+    }
+
     public Think(String content, Object subject){
         this.content = content;
         this.subject = subject;

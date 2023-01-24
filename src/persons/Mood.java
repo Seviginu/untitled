@@ -1,7 +1,7 @@
 package persons;
 
 public enum Mood {
-    RELAX("Расслабленное"), STRESSED("Напряженное"), FUNNY("Веселое"), NORMAL("Нормальное");
+    RELAX("Расслабленное"), STRESSED("Напряженное"), SLEEPING("Сон"), NORMAL("Нормальное");
 
     private String string;
 

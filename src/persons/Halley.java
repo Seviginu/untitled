@@ -26,7 +26,7 @@ public class Halley extends Person {
     }
 
     public Music makeConcert(int part){
-        System.out.println("Халлей выпустил концерт " + part + ".");
+        System.out.println("Halley выпустил концерт " + part + ".");
         return makeMusic("Концерт " + part, "*мелодия концерта " + part + "*");
     }
 

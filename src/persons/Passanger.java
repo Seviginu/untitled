@@ -1,5 +1,6 @@
 package persons;
 
+import persons.Person;
 import train.Carriage;
 
 abstract public class Passanger extends Person {
